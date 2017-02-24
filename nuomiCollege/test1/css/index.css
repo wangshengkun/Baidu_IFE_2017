@@ -1,0 +1,67 @@
+*{
+	margin:0px;
+	padding: 0px;
+}
+input{
+	display: none;
+}
+/*css sprites*/
+.radios label, .checkboxes label{
+	display: inline-block;
+	cursor: pointer;
+	background:url("../img/icon.png") no-repeat;
+	height: 16px;
+	width: 16px;
+}
+.radios label[for^="radio"]{
+	background-position: -24px -10px;
+}
+.checkboxes label[for^="checkbox"]{
+	background-position: -25px -32px;
+}
+.radios input[id^="radio"]:checked+label{
+	background-position: -59px -10px;
+}
+.checkboxes input[id^="checkbox"]:checked+label{
+	background-position: -60px -32px;
+}
+/*伪元素*/
+.radios1 label, .checkboxes1 label{
+	cursor: pointer;
+	display: inline-block;
+	height: 16px;
+	width: 16px;
+	border: 1px solid #d9d9d9;
+}
+.radios1 label{
+	border-radius: 50%;
+}
+.radios1 input[id$="1"]:checked+label{
+	border:1px solid #d73e33;
+}
+.radios1 input[id$="1"]:checked+label::after{
+	display:block;
+	height: 8px;
+    width: 8px;
+	position: relative;
+	left:50%;
+    margin-left: -4px;
+    top:50%;
+    margin-top: -4px;
+	content: "";
+	background-color: #d73e33;
+    border-radius: 50%;
+}
+.checkboxes1 input[id$="1"]:checked+label{
+	border:1px solid #d73e33;
+}
+.checkboxes1 input[id$="1"]:checked+label::after{
+	display: block;
+	height: 8px;
+	width: 8px;
+	position: relative;
+	top:-20%;
+	left:20%;
+	content:"√";
+	color: #d73e33;
+}
