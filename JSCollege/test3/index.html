@@ -38,14 +38,17 @@ function getData() {
   /*
   coding here
   */
-          var ul = document.getElementById("source");
-          var data = [];
-          for (var i = 0; i < ul.childElementCount; i++) {
-            var li = ul.children[i];
-            var strCity = li.innerHTML.split("空气质量：")[0];
-            var num = Number(li.children[0].innerHTML); 
-            data.push([strCity, num]);
-          }
+  var source = document.getElementById("source");
+  var data = [];
+  for(var i = 0,len = source.childNodes.length; i < len; i++){
+    if(source.childNodes[i].nodeType == 1){
+      var liTxt = source.childNodes[i].innerHTML;
+      var txt = liTxt.split("空气质量：<b>");
+      var city = txt[0];
+      var num = parseInt(txt[1]);
+      data.push([city,num]);
+    }
+  }
   /*
   data = [
     ["北京", 90],
@@ -64,7 +67,10 @@ function getData() {
  * 返回一个排序后的数组
  */
 function sortAqiData(data) {
-
+    data.sort(function(a,b){
+      return a[1] - b[1];
+    })
+    return data;
 }
 
 /**
@@ -73,6 +79,17 @@ function sortAqiData(data) {
  * 格式见ul中的注释的部分
  */
 function render(data) {
+  var resort = document.getElementById("resort");
+  var fragment = document.createDocumentFragment();
+  var li = null;
+  var txt = "";
+  for(var i = 0; i < data.length; i++){
+    li = document.createElement("li");
+    txt = document.createTextNode("第" + (i + 1) + "名:" + data[i][0] + "空气质量:" + data[i][1]);
+    li.appendChild(txt);
+    fragment.appendChild(li);
+  }
+  resort.appendChild(fragment);
 
 }
 
@@ -80,12 +97,27 @@ function btnHandle() {
   var aqiData = getData();
   aqiData = sortAqiData(aqiData);
   render(aqiData);
+  var btn = document.getElementById("sort-btn");
+  btn.disabled = true;
 }
+
+var EventUtil = {
+  addHandler:function(element, type, handler){
+    if(element.addEventListener){
+      element.addEventListener(type,handler,false);
+    }else if(element.attachEvent){
+      element.attachEvent("on" + type,handler);
+    }else{
+      element["on" + type] = handler;
+    }
+  }
+};
 
 function init() {
 
   // 在这下面给sort-btn绑定一个点击事件，点击时触发btnHandle函数
-
+  var btn = document.getElementById("sort-btn");
+  EventUtil.addHandler(btn,"click",btnHandle);
 }
 
 init();
