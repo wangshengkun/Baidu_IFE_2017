@@ -1,69 +1,118 @@
 window.onload=function(){
-	// 获取文本数字
-	function getNumber(){
-		var source = document.getElementsByTagName("input")[0].value;
-		if(source!=""){
-			var num = Number(source);
-			if(!isNaN(num)){
-				return num;
+	//跨浏览器事件处理程序
+	var EventUtil = {
+		addHandler:function(element, type, handler){
+			if(element.addEventListener){
+				element.addEventListener(type, handler, false);
+			} else if(element.attachEvent){
+				element.attachEvent("on" + type, handler);
 			}else{
-			alert("输入文本须为数字。");
+				element["on" + type] = handler;
 			}
-		}else{
-			alert("输入文本不能为空。");
 		}
-	}
-	// 小方块格式化
-	function addSpan(number){
-	var span = document.createElement("span");
-	span.style.display = "inline-block";
-	span.style.height = "40px";
-	span.style.width = "40px";
-	span.style.backgroundColor = "#ff0000";
-	span.style.color = "#fff";
-	span.style.textAlign = "center";
-	span.style.marginLeft = "4px";
-	span.style.fontSize = "12px";
-	span.style.lineHeight = "40px";
-	span.innerHTML = number;
-	// var wrap = document.getElementById("wrap");
-	// wrap.appendChild(span);
-	return span;
-	}
-	//
-	function render(numData){
-		for(var i = 0,len = numData.length; i < len; i++){
-			var number = numData[i];
-			var span = addSpan(number);
-			var wrap = document.getElementById("wrap");
-			wrap.appendChild(span);
-		}
-	}
-	//左侧插入
-	var data = [];
-	function addLeft(){
-		var numberTxt = getNumber();
-		data.push(numberTxt);
-		render(data);
+	}	
 
+	var txt = document.getElementsByTagName("input")[0];
+	var btn = document.getElementsByTagName("button");
+	var wrap =document.getElementById("wrap");
+	var pattern =/^[0-9]+$/;
+
+	var queue = {
+		//整段代码的关键，需理解this关键字。
+		arr:[],	
+
+		addLeft:function(num){
+			this.arr.unshift(num);
+			this.draw();
+			txt.value = "";
+		},
+
+		addRight:function(num){
+			this.arr.push(num);
+			this.draw();
+			txt.value = "";
+		},
+
+		isEmpty:function(){
+			if(this.arr.length == 0){
+				return true;
+			}
+		},
+
+		removeLeft:function(num){
+			if(!this.isEmpty()){
+				alert(Number(this.arr.shift()));
+				this.draw();
+			}else{
+				alert("该队列已为空。");
+			}
+		},
+
+		removeRight:function(num){
+			if(!this.isEmpty()){
+				alert(Number(this.arr.pop()));
+				this.draw();
+			}else{
+				alert("该队列已为空。");
+			}
+		},
+
+		draw:function(){
+			var canvas = "";
+			every(this.arr,function(num){
+				canvas += "<div>" + Number(num) +"</div>";
+			});
+			//每次调用queue的方法时都要重新渲染wrap的内容，所以效率上可能有缺陷，但暂时没找到更好的替代方案。
+			wrap.innerHTML = canvas;
+			autoDelete();
+		},
+
+		deleteNum:function(index){
+			this.arr.splice(index,1);
+			this.draw();
+		}
 	}
-	function addRight(num){
-		data.unshift(num);
+	//遍历函数，与Array类型的map()方法类似。
+	function every(arr,fn){
+		for(var cur = 0; cur < arr.length; cur++){
+			fn(arr[cur]);
+		}
 	}
-	function removeLeft(num){
-		data.pop();
+
+	function autoDelete(){
+		for(var cur = 0; cur < wrap.childNodes.length; cur++){
+			//利用IIFE与闭包来消除作用域链的副作用。
+            EventUtil.addHandler(wrap.childNodes[cur], "click", (function(cur){
+            	return function(){queue.deleteNum(cur);}
+            })(cur));
+		}
 	}
-	function removeRight(num){
-		data.shift();
-	}
-	
-	
-	function init(){
-		var btn = document.getElementsByTagName("button");
-		btn[0].onclick = addLeft;
-		btn[1].onclick = addRight;
-		btn[2].onclick = removeLeft;
-		btn[3].onclick = removeRight;
-	}
-	init();
+
+	EventUtil.addHandler(btn[0], "click", function(){
+		var number = txt.value;
+		if(pattern.test(number)){
+			queue.addLeft(number);
+		} else {
+			alert("请输入纯整数。");
+		}
+		
+	});
+
+	EventUtil.addHandler(btn[1], "click", function(){
+		var number = txt.value;
+		if(pattern.test(number)){
+			queue.addRight(number);
+		} else {
+			alert("请输入纯整数。");
+		}
+		
+	});
+
+	EventUtil.addHandler(btn[2], "click", function(){
+		queue.removeLeft();
+	});
+
+	EventUtil.addHandler(btn[3], "click", function(){
+		queue.removeRight();
+	});
 }
