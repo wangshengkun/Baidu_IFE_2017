@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>可视化排序</title>
+	<style>
+	#wrap{
+		display:flex;
+		align-items:flex-end;
+		height: 100px;
+		margin-top:10px;
+	}
+	#wrap div{
+		cursor:pointer;
+		width:10px;
+		background-color:#f00;
+		margin-right:4px;
+	}
+	</style>
+	<script type="text/javascript" src="js/index.js"></script>
+</head>
+<body>
+<input type="text">
+<button type="button" id="inLeft">左侧入</button>
+<button type="button" id="inRight">右侧入</button>
+<button type="button" id="outLeft">左侧出</button>
+<button type="button" id="outRight">右侧出</button>
+<button type="button" id="upset">打乱</button>
+<button type="button" id="bubble">冒泡</button>
+<div id="wrap"></div>
+</body>
+</html>
