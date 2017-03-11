@@ -80,23 +80,30 @@ window.onload = function(){
 			this.draw();
 		},
 
-		bubbleSort:function(){
-			var len =this.arr.length;
-			for(var i = 0; i < len; i++){
-				for(var j = 0; j < len-1; j++){
-					//需要进行数值转换，否则会出现100小于50之类的情况，与Array.sort()类似。
-					if(Number(this.arr[j]) > Number(this.arr[j+1])){
-						this.swap(j, j+1);
+		bubbleSort:function(arr){
+			var i = 0,
+				j = 0,
+				temp,
+				end = setInterval(painting,100);
+			function painting(){
+				if(i < arr.length){
+					if(j < arr.length-1-i){
+						if(Number(queue.arr[j]) > Number(queue.arr[j+1])){
+							temp = queue.arr[j];
+							queue.arr[j] = queue.arr[j+1];
+							queue.arr[j+1] = temp;
+							queue.draw();
+						}
+						j++;
+						return;
+					}else{
+						j = 0;
 					}
+						i++;
+				}else{
+					clearInterval(end);
 				}
 			}
-			this.draw();
-		},
-
-		swap:function(index1, index2){
-			var aux = this.arr[index1];
-			this.arr[index1] = this.arr[index2];
-			this.arr[index2] = aux;
 		}
 	}
 
@@ -144,7 +151,8 @@ window.onload = function(){
 		queue.removeRight();
 	});
 
-	EventUtil.addHandler(btn[5], "click", function(){
-		queue.bubbleSort();
+	EventUtil.addHandler(btn[4], "click", function(){
+		var divList = wrap.getElementsByTagName("div");
+		queue.bubbleSort(divList);
 	});
 }
