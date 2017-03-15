@@ -78,5 +78,6 @@ window.onload = function(){
 
 	EventUtil.addHandler(search, "click", function(){
 		var txt = document.getElementsByTagName("input")[0].value;
+		
 	});
 }
