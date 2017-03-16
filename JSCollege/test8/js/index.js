@@ -15,7 +15,8 @@ window.onload = function(){
 	var btn = document.getElementsByTagName("button");
 	var dftBtn = btn[0];
 	var bftBtn = btn[1];
-	var search = btn[2];
+	var dftSearch = btn[2];
+	var bftSearch = btn[3]
 	var order = [];
 	var timer = null;
 
@@ -38,19 +39,32 @@ window.onload = function(){
 		}	
 	}
 
-	function changeColor(){
+	function changeColor(txt){
+		//若第一次搜索就匹配成功，则不再查询。
 		var i = 0;
-		order[i].style.backgroundColor = "#f00";
-		timer = setInterval(function(){
-			i++;
-			if(i < order.length){
-				order[i-1].style.backgroundColor = "#fff";
-				order[i].style.backgroundColor = "#f00";
-			}else{
-				clearInterval(timer);
-				order[order.length-1].style.backgroundColor = "#fff";
-			}
-		},500);
+		if(order[i].firstChild.nodeValue.replace(/(^\s*)|(\s*$)/g, "") == txt){
+			order[i].style.backgroundColor = "#00f";
+		}else{
+			order[i].style.backgroundColor = "#f00";
+			timer = setInterval(function(){
+				i++;
+				if(i < order.length){
+					order[i-1].style.backgroundColor = "#fff";	
+					if(order[i].firstChild.nodeValue.replace(/(^\s*)|(\s*$)/g, "") == txt){
+						order[i].style.backgroundColor = "#00f";
+						clearInterval(timer);
+					}else{
+						order[i].style.backgroundColor = "#f00";
+					}
+				}else{
+					clearInterval(timer);
+					order[order.length-1].style.backgroundColor = "#fff";
+					if(txt != null){
+						alert("未搜索到该字符。");
+					}
+				}
+			},500);
+		}
 	}
 
 	function initialize(){
@@ -74,5 +88,27 @@ window.onload = function(){
 		initialize();
 		traverseBF(root);
 		changeColor();
+	});
+
+	EventUtil.addHandler(dftSearch, "click", function(){
+		var txt = document.getElementsByTagName("input")[0].value;
+		initialize();
+		traverseDF(root);
+		if(txt != ""){
+			changeColor(txt);
+		}else{
+			alert("请输入要查询的字符。");
+		}	
+	});
+
+	EventUtil.addHandler(bftSearch, "click", function(){
+		var txt = document.getElementsByTagName("input")[0].value;
+		initialize();
+		traverseBF(root);
+		if(txt != ""){
+			changeColor(txt);
+		}else{
+			alert("请输入要查询的字符。");
+		}
 	});
 }

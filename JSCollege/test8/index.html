@@ -4,16 +4,57 @@
 	<meta charset="utf-8">
 	<title>JavaScript和树（二）</title>
 	<script type="text/javascript" src="js/index.js"></script>	
-	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<style>
+	section{
+		width: 580px;
+		margin: 0 auto;
+	}
+	#root{
+		height: 400px;
+		width: 1000px;
+		margin:40px auto;
+	}
+	div{
+		display:flex;
+		justify-content:space-around;
+		flex-direction:row;
+		align-items:center;
+		border:1px solid #000;
+	}
+	div[class^="first"]{
+		height: 360px;
+	}
+	div[class$="L"]{
+		width: 300px;
+	}
+	div[class$="M"]{
+		width: 500px;
+	}
+	div[class$="R"]{
+		width: 100px;
+	}
+	.second{
+		height: 220px;
+		width: 260px;
+	}
+	.third{
+		height: 180px;
+		width: 50px;
+	}
+	.four{
+		height: 220px;
+		width: 80px;
+	}
+	</style>
 </head>
 <body>
 <section>
 	<button>深度优先遍历</button>
 	<button>广度优先遍历</button>
 	<input type="text">
-	<button>查询</button>
+	<button>深度优先查询</button>
+	<button>广度优先查询</button>
 </section>
-
 <div id="root">1
 	<div class="firstL">2
 		<div class="second">5
