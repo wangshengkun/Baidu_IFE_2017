@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>表单(一)单个表单项的检验</title>
+	<style>
+	table{
+		margin:30px auto;
+	}
+	td:first-child{
+		font-size:20px;
+		padding-right: 30px;
+	}
+	input{
+		height: 30px;
+		width: 200px;
+		border-radius: 5px;
+		border:1px solid #ddd;
+		text-indent: 1em;
+	}
+	button{
+		cursor: pointer;
+		height: 36px; 
+		width: 70px;
+		border-radius: 5px;
+		color:#fff;
+		background-color: blue;
+		font-size: 20px;
+		border:none;
+		margin-left: 10px;
+	}
+	#remind{
+		color:#ddd;
+	}
+	.warning{
+		/*利用重要性来提高特殊性值*/
+		color:#f00 !important;
+	}
+	.warningBorder{
+		border-color:#f00;
+	}
+	.right{
+		color:green !important;
+	}
+	.rightBorder{
+		border-color:green;
+	}
+	</style>
+</head>
+<body>
+	<table>
+		<tbody>
+			<tr>
+				<td>名称</td>
+				<td>
+					<input type="text">
+				</td>
+				<td>
+					<button id="one">验证</button>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td id="remind">必填，长度为4~16个字符</td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+<script>
+	var EventUtil = {
+		addHandler:function(element, type, handler){
+			if(element.addEventListener){
+				element.addEventListener(type, handler, false);
+			}else if(element.attachEvent){
+				element.attachEvent("on" + type, handler);
+			}else{
+				element["on" + type] = handler;
+			}
+		}
+	};
+
+	function validate(){
+		var input = document.getElementsByTagName("input")[0];
+		var txt = input.value;
+		var remind = document.getElementById("remind");
+		var result = countLength(txt);
+		if(result == 0){
+			remind.innerHTML = "姓名不能为空";
+			remind.setAttribute("class", "warning");
+			input.setAttribute("class", "warningBorder");
+		}else if((result >= 4) && (result <= 16)){
+			remind.innerHTML = "名称格式正确";
+			remind.setAttribute("class", "right");
+			input.setAttribute("class", "rightBorder");
+		}else{
+			remind.innerHTML = "长度须为4~16个字符";
+			remind.setAttribute("class", "warning");
+			input.setAttribute("class", "warningBorder");
+		}
+	}
+
+	function countLength(txt){
+		// result若未赋值，则为未定义，即undefined，调用Number()后转换为NaN,出错。
+		var result = 0,
+			temp;
+		for(var i = 0; i <txt.length; i++){
+			temp = txt.charCodeAt(i);
+			console.log(typeof temp);
+			console.log(temp);
+			if((temp >= 0) && (temp <= 128)){
+				result += 1;
+			}else{
+				result += 2;
+			}
+		}
+		return result;
+	}
+
+	var btn = document.getElementsByTagName("button")[0];
+	EventUtil.addHandler(btn, "click", validate);
+
+</script>
+</body>
+</html>
