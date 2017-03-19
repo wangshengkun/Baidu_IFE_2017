@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>表单(二)多个表单项的动态校验</title>
+	<script type="text/javascript" src="js/index.js"></script>
+	<style>
+	table{
+		margin:30px auto;
+	}
+	.classify{
+		font-size: 20px;
+		text-align: right;
+		padding-right: 20px;
+	}
+	input{
+		height: 30px;
+		width: 250px;
+		border-radius: 5px;
+		text-indent:1em;
+		border:1px solid #ddd;
+	}
+	button{
+		display: block;
+		cursor: pointer;
+		margin: 10px auto;
+		color:#fff;
+		background-color: blue;
+		border-radius: 5px;
+		height: 40px;
+		width: 80px;
+		font-size: 20px;
+		border:none;
+	}
+	.tip{
+		color:#ddd;
+	}
+	.warning{
+		color:#f00;
+	}
+	.warningBorder{
+		border-color: #f00 !important;
+	}
+	.right{
+		color:#0f0;
+	}
+	.rightBorder{
+		border-color:#0f0;
+	}
+	</style>
+</head>
+<body>
+<table>
+	<tbody>
+		<tr>
+			<td class="classify">名称</td>
+			<td><input type="text"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="info"></td>
+		</tr>
+		<tr>
+			<td class="classify">密码</td>
+			<td><input type="password"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="info"></td>
+		</tr>
+		<tr>
+			<td class="classify">密码确认</td>
+			<td><input type="password"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="info"></td>
+		</tr>
+		<tr>
+			<td class="classify">邮箱</td>
+			<td><input type="text"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="info"></td>
+		</tr>
+		<tr>
+			<td class="classify">手机</td>
+			<td><input type="text"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="info"></td>
+		</tr>
+	</tbody>
+</table>
+<button>提交</button>
+</body>
+</html>
