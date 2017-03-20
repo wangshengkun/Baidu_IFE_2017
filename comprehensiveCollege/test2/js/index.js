@@ -13,6 +13,7 @@ window.onload = function(){
 
 	var input = document.getElementsByTagName("input");
 	var info = document.getElementsByClassName("info");
+	var btn = document.getElementsByTagName("button")[0];
 	var tip = ["必填，长度为4~16位字符","长度为8~16，包含英文、数字","须与密码一致","example:XXXX@XX.com","1XXXXXXXXXX"];
 	var classify = ["名称","密码","确认密码","邮箱","手机号"];
 
@@ -39,25 +40,26 @@ window.onload = function(){
 					info[i].innerHTML = classify[i] + "不能为空";
 				}
 			});
+			
 		})(i);
 	}
 
 	function checkValue(curr,txt){
 		switch (curr){
 			case 0:
-                flag=/^[a-zA-Z0-9_]{4,16}$/.test(txt.replace(/[\u0391-\uFFE5]/g,"nn"));
+                flag = /^[a-zA-Z0-9_]{4,16}$/.test(txt.replace(/[\u0391-\uFFE5]/g,"aa"));
                 break;
             case 1:
-                flag=/^\S{8,16}$/.test(txt);
+                flag = /^\S{8,16}$/.test(txt);
                 break;
             case 2:
-                flag=((input[1].value==txt) && (txt != ""));
+                flag = ((input[1].value==txt) && (txt != ""));
                 break;
             case 3:
-                flag=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}/.test(txt);
+                flag = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}/.test(txt);
                 break;
             case 4:
-                flag=/^[1][0-9]{10}$/.test(txt);
+                flag = /^[1][0-9]{10}$/.test(txt);
                 break;
 		}
 		if(flag){
@@ -71,7 +73,6 @@ window.onload = function(){
 			resetStyle.call(info[curr]);
 			info[curr].classList.add("warning");
 		}
-		return flag;
 	}
 
 	function resetStyle(){
@@ -80,13 +81,20 @@ window.onload = function(){
 		this.classList.remove("right");
 	}
 
-	var btn = document.getElementsByTagName("button")[0];
 	EventUtil.addHandler(btn, "click", function(){
-		if(flag){
+		var flag = [];
+		[0,1,2,3,4].map(function(i){
+			var input = document.getElementsByTagName("input");
+			var txt = input[i].value;
+			input[i].onblur = checkValue(i,txt);
+			if(input[i].parentNode.parentNode.nextElementSibling.lastElementChild.classList.contains("right")){
+				flag.push(true);
+			}
+		}) 
+		if(flag.length == 5){
 			alert("提交成功");
 		}else{
 			alert("提交失败");
-			flag = false;
 		}
 	});
 }
