@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>表单(三)联动</title>
+	<script type="text/javascript" src="js/index.js"></script>
+	<style>
+	#classify{
+		width: 200px;
+		margin: 40px auto;
+	}
+	#classify label{
+		margin-right: 30px;
+	}
+	#detail{
+		width: 400px;
+		margin: 0 auto;
+	}
+	span{
+		margin-right: 20px;
+	}
+	#city{
+		width: 100px;
+		margin-right: 20px;
+	}
+	#school{
+		width: 200px;
+	}
+	.outSchool input{
+		margin-left: 20px;
+		width: 200px;
+	}
+	.hide{
+		display:none;
+	}
+	</style>
+</head>
+<body>
+<div id="classify">
+	<label for="student">
+		<input type="radio" name="people" id="student">
+		在校生
+	</label>
+	<label for="graduate">
+		<input type="radio" name="people" id="graduate">
+		非在校生
+	</label>
+</div>
+<div id="detail">
+	<div class="inSchool hide">
+		<span>学校</span>
+		<select id="city">
+			<option value="bj">北京</option>
+			<option value="sh">上海</option>
+			<option value="fj">福建</option>
+		</select>
+		<select id="school"></select>
+	</div>
+	<div class="outSchool hide">
+		就业单位<input type="text">
+	</div>
+</div>
+</body>
+</html>
