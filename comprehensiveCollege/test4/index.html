@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>听指令的小方块（一）</title>
+	<script type="text/javascript" src="js/index.js"></script>
+	<style>
+	html, body{
+		margin:0;
+		padding:0;
+	}
+	table{
+		margin: 5px auto;
+		border-spacing: 0;
+	}
+	tr:nth-child(n+2) > td:nth-child(n+2){
+		border:1px solid #ddd;
+	}
+	td{
+		height:50px;
+		width: 50px;
+		text-align: center;
+	}
+	#control{
+		width: 220px;
+		margin: 0 auto; 
+	}
+	#block{
+		position: relative;
+		height:50px;
+		width: 50px;
+		background-color: #f00;
+	}
+	span{
+		display: block;
+		position: absolute;
+		background-color: #00f;
+		height:10px;
+		width: 50px;
+	}
+	h5{
+		margin-top:5px;
+		margin-bottom:0;
+		margin-left: 25px;
+	}
+	ul{
+		margin-top:5px;
+	}
+	ul li{
+		font-size: 13px;
+	}
+	</style>
+</head>
+<body>
+	<table>
+		<tbody>
+			<tr>
+				<td></td>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+				<td>7</td>
+				<td>8</td>
+				<td>9</td>
+				<td>10</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>6</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<div id="block">
+						<span></span>
+					</div>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>7</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>8</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>9</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>10</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+	<div id="control">
+		<input type="text">
+		<button>确定</button>
+	</div>
+	<div id="tip">
+	<h5>指令内容（不区分大小写，注意空格）:</h5>
+		<ul>
+			<li>GO：向蓝色边所面向的方向前进一格（一格等同于正方形的边长）</li>
+			<li>TUN LEF：向左转（逆时针旋转90度）</li>
+			<li>TUN RIG：向右转（顺时针旋转90度）</li>
+			<li>TUN BAC：向右转（旋转180度）</li>
+		</ul>
+	</div>
+</body>
+</html>
