@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>听指令的小方块（二）</title>
+	<script type="text/javascript" src="js/index.js"></script>
+	<style>
+	html, body{
+		margin:0;
+		padding:0;
+	}
+	table{
+		border-spacing: 0;
+		margin-bottom: 10px;
+	}
+	tr:nth-child(n+2) > td:nth-child(n+2){
+		border:1px solid #ddd;
+	}
+	td{
+		box-sizing:border-box;
+		height:50px;
+		width: 50px;
+		text-align: center;
+	}
+	#block{
+		position:absolute;
+		box-sizing:border-box;
+		height: 50px;
+		width: 50px;
+		background-color: #f00;
+		border-top: 10px solid #00f;
+		transform:rotate(0deg);
+		transition: 0.5s;
+	}
+	input, #tip{
+		margin-left: 50px;
+	}
+	h5{
+		margin-top:5px;
+		margin-bottom: 5px;
+	}
+	ul{
+		margin-top:8px;
+		width: 650px;
+		height: 400px;
+	}
+	ul li{
+		float: left;
+		padding-right: 30px;
+		font-size: 13px;
+	}
+	</style>
+</head>
+<body>
+<table>
+	<tbody></tbody>
+</table>
+<input type="text">
+<button>确认</button>
+<div id="tip">
+	<h5>指令内容（不区分大小写）</h5>
+	<ul>
+		<li>TRA LEF：向屏幕的左侧移动一格，方向不变</li>
+		<li>TRA TOP：向屏幕的上面移动一格，方向不变</li>
+		<li>TRA RIG：向屏幕的右侧移动一格，方向不变</li>
+		<li>TRA BOT：向屏幕的下面移动一格，方向不变</li>
+		<li>MOV LEF：方向转向屏幕左侧，并向屏幕的左侧移动一格</li>
+		<li>MOV TOP：方向转向屏幕上面，向屏幕的上面移动一格</li>
+		<li>MOV RIG：方向转向屏幕右侧，向屏幕的右侧移动一格</li>
+		<li>MOV BOT：方向转向屏幕下面，向屏幕的下面移动一格</li>
+	</ul>
+</div>
+<div id="block"></div>
+</body>
+</html>
