@@ -3,10 +3,36 @@
 <head>
 	<meta charset="utf-8">
 	<title>UI组件之浮出层</title>
-	<script></script>
-	<style></style>
+	<style>
+	html, body{
+		margin:0;
+		padding:0;
+	}
+	body{
+		height: 2000px;
+	}
+	#popup{
+		width:300px;
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		background-color: rgb(250,250,250);
+		text-align: center;
+	}
+	input{
+		margin-bottom: 10px;
+	}
+	</style>
 </head>
 <body>
-
+<button>点击</button>
+<div id="popup">
+	<h4>这是一个浮出层</h4>
+	<p>拖住标题可实现移动<br>
+	点击浮出层以外部分或按钮可关闭
+	</p>
+	<input type="button" value="确定">
+</div>
+<div id="mask"></div>
+<script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>
