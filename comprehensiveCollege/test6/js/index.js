@@ -23,7 +23,6 @@ var EventUtil = {
 //浮出层组件
 function Popup(element, mask){
 	this.element = element;
-	this.visible = true;
 	if(arguments[1] == null){
 		this.maskElement = null;
 	}else {
@@ -35,18 +34,18 @@ function Popup(element, mask){
 
 Popup.prototype = {
 	constructor: Popup,
-
+	
 	show: function(){
-		this.visible = true;
+		this.maskElement.style.display = "block";
+		this.element.style.display = "block";
+		//重置定位，主要是消除dragNode()的影响
 		this.element.style.left = "50%";
 		this.element.style.top = "50%";
-		this.element.style.visibility = "visible";
-		this.element.style.transform = "translate(-50%,-50%)";
 	},
 
 	hide: function(){
-		this.visible = false;
-		this.element.style.visibility = "hidden";
+		//父元素设置为display:none时，子元素也不可见
+		this.maskElement.style.display = "none";
 	},
 
 	init: function(){
@@ -60,13 +59,13 @@ Popup.prototype = {
 		this.maskElement.style.left = "50%";
 		this.maskElement.style.transform = "translate(-50%,-50%)";
 		this.maskElement.style.backgroundColor = "rgba(108,108,108,0.7)";
-		this.maskElement.style.visibility = this.visible ? "visible": "hidden";
+		this.maskElement.style.display = "none";
 
 		this.element.style.position = "absolute";
-		this.element.style.width = this.element.clientWidth + "px";
 		this.element.style.left = "50%";
 		this.element.style.top = "50%";
 		this.element.style.transform = "translate(-50%,-50%)";
+		this.element.style.display = "none";
 
 		this.element.parentNode.removeChild(this.element);
 		this.maskElement.appendChild(this.element);
@@ -77,6 +76,7 @@ Popup.prototype = {
 			self.hide();
 		});
 
+		//防止事件冒泡至遮罩层
 		EventUtil.addHandler(this.element, "click", function(event){
 			var event = event ? event : window.event;
 			if(event.stopPropagation){
@@ -89,6 +89,7 @@ Popup.prototype = {
 		this.dragNode(this.element.children[0]);
 	},
 
+	//拖动节点函数
 	dragNode: function(node){
 		node.style.cursor = "move";
 		var self = this;
@@ -109,9 +110,6 @@ Popup.prototype = {
 				EventUtil.removeHandler(document, "mousemove", move);
 			});
 		});
-
-		
-
 	}
 }
 
@@ -121,7 +119,6 @@ var clickBtn = document.getElementsByTagName("button")[0];
 var sureBtn = document.getElementsByTagName("input")[0];
 
 var layer = new Popup(popup,mask);
-layer.show();
 EventUtil.addHandler(clickBtn, "click", function(){
 	layer.show();
 })
