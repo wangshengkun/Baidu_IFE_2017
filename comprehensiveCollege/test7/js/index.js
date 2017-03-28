@@ -1,7 +1,7 @@
 var EventUtil = {
 	addHandler: function(element, type, handler){
 		if(element.addEventListener){
-			element.addEventListener(type, hanlder, false);
+			element.addEventListener(type, handler, false);
 		}else if(element.attachEvent){
 			element.attachEvent("on" + type, handler);
 		}else {
@@ -96,7 +96,77 @@ CreateTable.prototype = {
 		}else{
 			alert("数据的数据类型不符合要求");
 		}	
+	},
+
+	//添加升序按钮
+	addAscBtn: function(){
+		var tbody = document.getElementsByTagName("tbody")[0];
+		for(var i = 1; i < this.cloumn; i++){
+			var ascBtn = document.createElement("div");
+			ascBtn.setAttribute("class", "ascBtn");
+			tbody.rows[0].cells[i].style.position = "relative";
+			tbody.rows[0].cells[i].appendChild(ascBtn);
+		}
+	},
+
+	//添加降序按钮
+	addDescBtn: function(){
+		var tbody = document.getElementsByTagName("tbody")[0];
+		for(var i = 1; i < this.cloumn; i++){
+			var descBtn = document.createElement("div");
+			tbody.rows[0].cells[i].style.position = "relative";
+			descBtn.setAttribute("class", "descBtn");
+			tbody.rows[0].cells[i].appendChild(descBtn);
+		}
+	},
+
+	//排序函数
+	addOrder: function(index, flag){
+		//升序：true  降序: false
+		var flag = flag;
+		//不比较第一列数据，无需获取
+		var num = index+1;
+		//存放最初始状态的数据
+		var oldData = [];
+		//存放按要求排序后的数据
+		var newData = [];
+		var tbody = document.getElementsByTagName("tbody")[0];
+		if(num < this.cloumn){
+			var tempData = [];
+			for(var i = 1; i < this.row; i++){
+				tempData.push(tbody.rows[i].cells[num].firstChild.nodeValue);
+				//oldData是引用类型的值，是指针，传递值时是更改堆内存中同一个对象，
+				//而不是创建一个副本，所以无法将tempData直接赋值给oldData
+				oldData.push(tbody.rows[i].cells[num].firstChild.nodeValue);
+			}
+		}
+		//默认为升序排列
+		newData = tempData.sort(function(a, b){return a - b;});
+		//降序排列
+		if(flag != true){
+			newData = newData.reverse();
+		}
+		changeOrder(newData,oldData);
+		//改变排序函数
+		function changeOrder(newData, oldData){
+			var oldPos, newPos, temp, tempContent;
+			var tbody = document.getElementsByTagName("tbody")[0];
+			//比较同一个值在两个数组中的位置，若不相同则进行换位
+			for(var i = 0; i < newData.length; i++){
+				newPos = i;
+				oldPos = oldData.indexOf(newData[i]);
+				if(newPos != oldPos){
+					tempContent = tbody.rows[oldPos+1].innerHTML;
+					tbody.rows[oldPos+1].innerHTML = tbody.rows[newPos+1].innerHTML;
+					tbody.rows[newPos+1].innerHTML = tempContent;
+					temp = oldData[oldPos];
+                    oldData[oldPos] = oldData[newPos];
+                    oldData[newPos] = temp;			
+				}
+			}
+		}
 	}
+	
 }
 
 var table = new CreateTable(4,5);
@@ -116,3 +186,15 @@ var data =[
 	["小亮",60,100,70,230]	
 		];
 table.addAllRows(data);
+table.addAscBtn();
+table.addDescBtn();
+
+var ascBtn= document.getElementsByTagName("tbody")[0].getElementsByClassName("ascBtn");
+var descBtn = document.getElementsByTagName("tbody")[0].getElementsByClassName("descBtn");
+for(var index = 0; index < 4; index++){
+	(function(index){
+		EventUtil.addHandler(ascBtn[index], "click", function(){table.addOrder(index,true)});
+		EventUtil.addHandler(descBtn[index], "click", function(){table.addOrder(index,false);});
+	})(index);
+}
+
