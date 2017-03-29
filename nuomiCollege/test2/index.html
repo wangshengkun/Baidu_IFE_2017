@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>使用CSS实现折叠面板</title>
+	<style>
+	*{
+		margin:0;
+		padding:0;
+	}
+	/*body{
+		position: relative;
+	}*/
+	p{
+		margin:0px auto;
+		font-size: 14px;
+		background-color: #ddd;
+		color:#fff;
+		height: 40px;
+		width:250px;
+		text-align: center;
+		line-height: 40px;
+	}
+	ul{
+		display: none;
+		width:100px;
+	}
+	ul li{
+		cursor:pointer;
+		list-style: none;
+		text-align: center;
+		padding-top:5px;
+		padding-bottom: 5px;
+		font-size: 12px;
+		background-color: rgb(108,108,108);
+		color:rgb(250,250,250);
+	}
+	ul li:hover{
+		color:#f00;
+	}
+	</style>
+</head>
+<body>
+<p>苟利国家生死以，岂因祸福避趋之</p>
+<ul>
+	<li>长者</li>
+	<li>华莱士</li>
+	<li>香港记者</li>
+</ul>
+<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>
