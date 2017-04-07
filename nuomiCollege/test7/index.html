@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>CSS3实现3D轮播图</title>
+	<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<h3>点击图片实现转动</h3>
+<div id="stage">
+	<div id="wrap">
+		<img src="img/1.png" class="carousel">
+		<img src="img/2.png" class="carousel">
+		<img src="img/3.png" class="carousel">
+		<img src="img/4.png" class="carousel">
+		<img src="img/5.png" class="carousel">
+	</div>
+</div>
+<script>
+	var wrap = document.getElementById("wrap");
+	var index = 0;
+	wrap.addEventListener("click", function(){
+		this.style["transform"] = "rotateY("+ (-1 * 72 * ++index) +"deg)";	
+	});
+</script>
+</body>
+</html>
