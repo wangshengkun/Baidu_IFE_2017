@@ -38,9 +38,11 @@ var aqiData = [
     return b[1] -a[1];
   });
   var list = document.getElementById("aqi-list");
+  var txt = "";
   for(var i=0;i<item.length;i++){
-    list.innerHTML += "<li>第"+(i+1)+"名:"+item[i][0]+item[i][1]+"</li>";
+    txt += "<li>第" + (i+1) + "名:" + item[i][0] + item[i][1] + "</li>";
   }
+  list.innerHTML = txt;
 
 })();
 
