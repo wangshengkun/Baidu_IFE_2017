@@ -7,19 +7,10 @@
 <body>
 
 <script>
-	// var Observer = function(){};
-	// Observer.prototype = function(){
-	// 	return{
-	// 		data
-	// 	}
-	// }();
-	// Object.defineProperty(Observer, "data",{
-
-	// });
-	// 观察者构造函数
+// 观察者构造函数
 function Observer(data) {
     this.data = data;
-    this.walk(data)
+    this.walk(data);
 }
 
 let p = Observer.prototype;
@@ -38,41 +29,37 @@ p.walk = function (obj) {
 
             // 这里进行判断，如果还没有遍历到最底层，继续new Observer
             if (typeof val === 'object') {
-            	console.log(1);
                 new Observer(val);
-                console.log(2);
             }
-            console.log(3);
             this.convert(key, val);
         }
     }
 };
 
 p.convert = function (key, val) {
-	console.log(4);
     Object.defineProperty(this.data, key, {
         enumerable: true,
         configurable: true,
         get: function () {
             console.log('你访问了' + key);
-            // return val
+            return val;
         },
         set: function (newVal) {
             console.log('你设置了' + key);
             console.log('新的' + key + ' = ' + newVal)
             if (newVal === val) return;
-            val = newVal
+            val = newVal;
         }
     })
 };
 
 let data = {
     user: {
-        name: "liangshaofeng",
-        age: "24"
+        name: "Gatsby",
+        age: "22"
     },
     address: {
-        city: "beijing"
+        city: "xiamen"
     }
 };
 
